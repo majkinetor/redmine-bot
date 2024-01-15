@@ -11,4 +11,6 @@ This is a bot that uses Redmine REST API to do specific tasks.
 ## Tasks
 
 1. Inactivity Reminder<br>
-Add an issue note when a ticket is inactive for more than configured number of days.
+Add an issue note when a ticket is inactive for more than the configured number of days.
+1. Terminator<br>
+Close an issue with the note when a ticket is inactive for more than the configured number of days.

@@ -9,7 +9,7 @@ Get-ChildItem $PSScriptRoot\tasks\*.ps1 | % { . $_ }
 
 log "Bot started"
 foreach ($Task in $config.Tasks) {
-    if (!$task.Enabled) { log "Skipping disabled task:" $task.Name }
+    if (!$task.Enabled) { log "Skipping disabled task:" $task.Name; continue }
     $taskFunction = "bt-" + $task.Name
     if (!(Get-ChildItem Function:$taskFunction)) { log "Skipping invalid task:" $task.Name }
 
