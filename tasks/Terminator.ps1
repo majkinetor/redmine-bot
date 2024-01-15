@@ -5,8 +5,7 @@ function bt-terminator {
     $inactiveDateStart = $now.AddDays(-$Task.InactivityDays).ToString("yyyy-MM-dd")
     $createdAfter = $Task.CreatedAfter
 
-    $finalStatus = Get-RedmineStatus -Name $Task.FinalStatus
-    if (!$finalStatus) { throw "Can't get status '$($Task.FinalStatus)'"}
+    $statuses = Get-RedmineStatus
 
     log "Initializing"
     $projects = Get-AllPages "Get-RedmineProject"
@@ -35,13 +34,21 @@ function bt-terminator {
         $issue = $all_issues[$j]
         if ($updatedIssues[ $issue.id ]) { continue }
 
+        $ProjectName = $issue.project.name
         $UpdatedOn = $issue.updated_on
         $UpdatedBefore = ($now - [datetime]$UpdatedOn).Days
         $note = "`"$($Task.Note)`"" | iex
         $updatedIssues[ $issue.id ] = $true
+
+        $issueStatus = $issue.status.name
+        $closingStatus = $Task.StatusMap.$issueStatus
+        if (!$closingStatus) { $closingStatus = $Task.StatusMap.Default }
+        $closingStatus = $statuses | ? name -eq $closingStatus
+        $ClosingStatusName = $closingStatus.Name
+
         if (!$Task.WhatIf) {
             try {
-                Update-RedmineIssue -Id $issue.id -Notes $note -StatusId $finalStatus.id
+                Update-RedmineIssue -Id $issue.id -Notes $note -StatusId $closingStatus.id
                 log $Issue.id -Ident 1
             } catch {
                 log "ERR $($Issue.id): $_" -Ident 1

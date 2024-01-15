@@ -25,18 +25,23 @@ $( $Assignee ? "Potrebno je da **$Assignee** reaguje u što kraćem roku" : "Pot
             Enabled = $true
             WhatIf = $true
 
-            MaxIssues = 2
-            CreatedAfter = '2024-01-01'
+            MaxIssues = 1000
+            CreatedAfter = '2023-11-01'
             Projects = ''
             Trackers = ''
             Statuses = ''
-            InactivityDays = 1
-            FinalStatus = 'Nerešeno'
+            InactivityDays = 30
+            StatusMap = @{
+                'Default' = 'Nerešeno'
+                'Rešeno' = 'Zatvoreno'
+            }
             Note = '### Automatsko zatvaranje
 
 Poslednja aktivnost na tiketu #$($Issue.Id) desila se pre $UpdatedBefore dana ($($UpdatedOn.ToString("dd.MM.yyyy"))).
+Tiket se zatvara zbog neaktivnosti:
 
-Tiket se zatvara zbog neaktivnosti.
+- Projekat: $ProjectName
+- Status: $ClosingStatusName
 '
         }
     )
