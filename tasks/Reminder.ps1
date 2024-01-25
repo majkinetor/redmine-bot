@@ -44,6 +44,7 @@ function bt-reminder {
         $UpdatedBefore = ($now - [datetime]$issue.updated_on).Days
 
         $note = "`"$($Task.Note)`"" | iex
+        $note += "`n---`n`nTask UID: $($Task.TaskUid)"
         $updatedIssues[ $issue.id ] = $true
         if (!$Task.WhatIf) {
             try {

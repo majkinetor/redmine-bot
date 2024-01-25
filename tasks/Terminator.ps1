@@ -5,14 +5,13 @@ function bt-terminator {
     $inactiveDateStart = $now.AddDays(-$Task.InactivityDays).ToString("yyyy-MM-dd")
     $createdAfter = $Task.CreatedAfter
 
-    $statuses = Get-RedmineStatus
-
     log "Initializing"
-    $projects = Get-AllPages "Get-RedmineProject"
+    $all_projects = Get-AllPages "Get-RedmineProject"
+    $all_statuses = Get-RedmineStatus
 
-    if ($Task.Projects) { $projects = $projects | ? identifier -in $Task.Projects }
+    if ($Task.Projects) { $projects = $all_projects | ? identifier -in $Task.Projects }
     if ($Task.Trackers) { $trackers = Get-RedmineTracker | ? name -in $Task.Trackers }
-    if ($Task.Statuses) { $statuses = Get-RedmineStatus  | ? name -in $Task.Statuses }
+    if ($Task.Statuses) { $statuses = $all_statuses | ? name -in $Task.Statuses }
 
     log "Finding issues inactive for more than" $Task.InactivityDays  "days"
     $all_issues = @()
@@ -34,6 +33,7 @@ function bt-terminator {
         $issue = $all_issues[$j]
         $IssueUrl = $Config.RedmineUrl + "/issues/" + $issue.id
         if ($updatedIssues[ $issue.id ]) { continue }
+        if ($issue.description.ToLower() -like "*$BotIgnoreString*") { log $issue.id "explicitely ignored" -Ident 1; continue }
 
         $IssueId = $issue.id
         $ProjectName = $issue.project.name
@@ -44,9 +44,11 @@ function bt-terminator {
         $issueStatusName = $issue.status.name
         $ClosingStatusName = $Task.StatusMap.$issueStatusName
         if (!$ClosingStatusName) { $ClosingStatusName = $Task.StatusMap.Default }
-        $closingStatus = $statuses | ? name -eq $ClosingStatusName
+        $closingStatus = $all_statuses | ? name -eq $ClosingStatusName
+        if (!$closingStatus) { log "err: can't find status '$ClosingStatusName'" -Ident 1; continue }
 
         $note = "`"$($Task.Note)`"" | iex
+        $note += "`n---`n`nTask UID: $($Task.TaskUid)"
         $updatedIssues[ $issue.id ] = $true
         if (!$Task.WhatIf) {
             try {

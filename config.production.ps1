@@ -1,12 +1,14 @@
 @{
-    RedmineUserId = $Env:Production_RedmineUserId
-    RedmineKey = $Env:Production_RedmineKey
-    RedmineUrl = $Env:Production_RedmineUrl
-    DateFormat = "dd.MM.yyyy."
+    RedmineUserLogin = $Env:Production_RedmineUserLogin
+    RedmineUserId    = $Env:Production_RedmineUserId
+    RedmineUserKey   = $Env:Production_RedmineUserKey
+    RedmineUrl       = $Env:Production_RedmineUrl
+    DateFormat       = "dd.MM.yyyy."
 
     Tasks = @(
         [ordered]@{
             Name = 'Reminder'
+            TaskUid = 'adb48403-9022-40bc-aed0-9881ae4f1c3f'
             Enabled = $true
             WhatIf = $true
 
@@ -25,6 +27,7 @@ Potrebno je da **rešavalac** reaguje u što kraćem roku.
         }
         [ordered]@{
             Name = 'Terminator'
+            TaskUid = '29b1b897-0de7-4aa7-90af-2d6a1085501e'
             Enabled = $true
             WhatIf = $true
 

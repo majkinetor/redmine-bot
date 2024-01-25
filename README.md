@@ -29,6 +29,9 @@ All tasks have the following parameters:
 | Name      | Name of the tasks to run                         | string |
 | Enabled   | Determines if task runs                          | bool   |
 | WhatIf    | Determines if task just reports what it would do | bool   |
+| TaskUid   | Unique identifier of the task                    | string |
+
+Bot will ignore task with the following string anywhere in the issue description: `@<RedmineUserLogin>: ignore`
 
 ### Reminder
 
