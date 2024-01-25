@@ -28,7 +28,7 @@ All tasks have the following parameters:
 | --------- | ------------------------------------------------ | ------ |
 | Name      | Name of the tasks to run                         | string |
 | Enabled   | Determines if task runs                          | bool   |
-| WhatIf    | Determines if task just reports what it would do | boll   |
+| WhatIf    | Determines if task just reports what it would do | bool   |
 
 ### Reminder
 
