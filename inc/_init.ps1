@@ -14,7 +14,8 @@ function Log {
 
     $now = Get-Date
     $elapsed = $now - $StartDate
-    $log = '{0:HH\:mm\:ss} [{1:hh\:mm\:ss}]    {2}{3}' -f $now, $elapsed, (' '*$Ident*2), "$IgnoredArguments"
+    $tsk = $Task ? "[$($Task.name)]" : ""
+    $log = '{0:HH\:mm\:ss} [{1:hh\:mm\:ss}] {4}   {2}{3}' -f $now, $elapsed, (' '*$Ident*2), "$IgnoredArguments", $tsk.PadRight(15)
     Write-Host $Log
     $Log | Out-FIle -Append $LogPath
 }

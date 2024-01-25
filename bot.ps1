@@ -2,17 +2,17 @@ Get-ChildItem $PSScriptRoot\inc\*.ps1 | % { . $_ }
 
 import-module $PSScriptRoot\..\mm-redmine -Force
 
-$Config = . $PSScriptRoot\config.ps1
+$Config = . $PSScriptRoot\config.$Environment.ps1
 Initialize-RedmineSession -Url $Config.RedmineUrl -Key $Config.RedmineKey
 
 Get-ChildItem $PSScriptRoot\tasks\*.ps1 | % { . $_ }
-
+$Task = $null
 log "Bot started"
 foreach ($Task in $config.Tasks) {
-    if (!$task.Enabled) { log "Skipping disabled task:" $task.Name; continue }
+    if (!$task.Enabled) { log "Task is disabled"; continue }
     $taskFunction = "bt-" + $task.Name
     if (!(Get-ChildItem Function:$taskFunction)) { log "Skipping invalid task:" $task.Name }
 
-    log "Task:" $task.Name ("`n`n" + ((($task | Out-String).Trim() -split "`n" | Select -Skip 4 ) | Out-String))
+    log "Starting task" ("`n`n" + ((($task | Out-String).Trim() -split "`n" | Select -Skip 4 ) | Out-String))
     iex $taskFunction
 }
