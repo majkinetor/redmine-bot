@@ -4,8 +4,8 @@ This is a bot that uses Redmine REST API to do specific tasks.
 
 ## Usage
 
-1. Clone [mm-redmine](https://github.com/majkinetor/mm-redmine) and put it in a sibling directory
-1. Use an existing task or add bot new one in the [tasks](./tasks) folder
+1. Clone [mm-redmine](https://github.com/majkinetor/mm-redmine) and put it in a sibling directory or install in the system location
+1. Use an existing task or add new one in the [tasks](./tasks) folder
 1. Create trigger mechanism (scheduled task, email scanner, RSS feed etc.)
 
 Mandatory configuration options:
