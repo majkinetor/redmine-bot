@@ -31,7 +31,10 @@ function bt-reminder {
     log "Updating $maxIssues issues"
     for ($j=0; $j -lt $maxIssues ; $j++) {
         $issue = $all_issues[$j]
+        $IssueUrl = $Config.RedmineUrl + "/issues/" + $issue.id
         if ($updatedIssues[ $issue.id ]) { continue }
+        if ($issue.description.ToLower() -like "*$BotIgnoreString*") { log $issue.id "explicitely ignored" -Ident 1; continue }
+
         if ($Task.NoSpam) {
             $issue = Get-RedmineIssue -Id $issue.id -Include journals
             if ($issue.journals[-1].user.id -eq $Config.RedmineUserId) { log "no spam:" $issue.id -Ident 1; continue }

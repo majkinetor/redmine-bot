@@ -16,6 +16,6 @@ foreach ($Task in $config.Tasks) {
     $taskFunction = "bt-" + $task.Name
     if (!(Get-ChildItem Function:$taskFunction)) { log "Skipping invalid task:" $task.Name }
 
-    log "Starting task" ("`n`n" + ((($task | Out-String).Trim() -split "`n" | Select -Skip 4 ) | Out-String))
+    log "Starting task" ("`n`n" + ((($task | Out-String).Trim() -split "`n" | Select -Skip 4 ) | Out-String -Stream ))
     iex $taskFunction
 }

@@ -48,7 +48,7 @@ Add an issue note when a ticket is inactive for more than the configured number 
 | InactivityDays | Number of days of inactivity after which message is created                | int      |
 | Note           | Template for the message to be created after ticket is considered inactive | string   |
 
-Message template supports the following variables: `$IssueId`, `$ProjectName`, `$Assignee`, `$UpdatedOn`, `$UpdatedBefore`
+Message template supports the following variables: `$IssueId`, `$IssueUrl`, `$ProjectName`, `$Assignee`, `$UpdatedOn`, `$UpdatedBefore`
 
 ### Terminator
 
