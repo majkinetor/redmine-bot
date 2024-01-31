@@ -40,10 +40,11 @@ function bt-reminder {
             if ($issue.journals[-1].user.id -eq $Config.RedmineUserId) { log "no spam:" $issue.id -Ident 1; continue }
         }
 
-        $IssueId = $issue.id
-        $ProjectName = $issue.project.name
-        $Assignee = $issue.assigned_to.name
-        $UpdatedOn = ([datetime]$issue.updated_on).ToString($Config.DateFormat)
+        $IssueId       = $issue.id
+        $ProjectName   = $issue.project.name
+        $Assignee      = $issue.assigned_to.name
+        $AssigneeId    = $issue.assigned_to.id
+        $UpdatedOn     = ([datetime]$issue.updated_on).ToString($Config.DateFormat)
         $UpdatedBefore = ($now - [datetime]$issue.updated_on).Days
 
         $note = "`"$($Task.Note)`"" | iex

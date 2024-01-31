@@ -22,7 +22,7 @@
             Note = '### Automatski podsetnik
 
 Poslednja aktivnost na tiketu #$IssueId desila se pre $UpdatedBefore dana ($UpdatedOn).
-Potrebno je da **rešavalac** reaguje u što kraćem roku.
+Potrebno je da $($Assignee ? $Assignee : "se") reaguje u adekvatnom roku.
 '
         }
         [ordered]@{

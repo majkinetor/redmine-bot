@@ -35,10 +35,11 @@ function bt-terminator {
         if ($updatedIssues[ $issue.id ]) { continue }
         if ($issue.description.ToLower() -like "*$BotIgnoreString*") { log $issue.id "explicitely ignored" -Ident 1; continue }
 
-        $IssueId = $issue.id
-        $ProjectName = $issue.project.name
-        $Assignee = $issue.assigned_to.name
-        $UpdatedOn = ([datetime]$issue.updated_on).ToString($Config.DateFormat)
+        $IssueId       = $issue.id
+        $ProjectName   = $issue.project.name
+        $Assignee      = $issue.assigned_to.name
+        $AssigneeId    = $issue.assigned_to.id
+        $UpdatedOn     = ([datetime]$issue.updated_on).ToString($Config.DateFormat)
         $UpdatedBefore = ($now - [datetime]$issue.updated_on).Days
 
         $issueStatusName = $issue.status.name
